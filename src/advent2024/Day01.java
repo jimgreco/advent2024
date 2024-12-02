@@ -24,21 +24,21 @@ import java.util.HashMap;
 public class Day01 {
 
     public static void main(String[] args) throws IOException {
+        // parse file into two lists
         var lines = Files.readAllLines(Path.of("resources/day01"));
         var list1 = new int[lines.size()];
         var list2 = new int[lines.size()];
-
         for (var i = 0; i < lines.size(); i++) {
             var nums = lines.get(i).strip().split("\\s+");
             list1[i] = Integer.parseInt(nums[0]);
             list2[i] = Integer.parseInt(nums[1]);
         }
 
-        // Solution: 3508942
+        // Solution 1: 3508942
         var distance = doPart1(list1, list2);
         System.out.println(distance);
 
-        // Solution: 26593248
+        // Solution 2: 26593248
         var similarity = doPart2(list1, list2);
         System.out.println(similarity);
     }
@@ -55,14 +55,14 @@ public class Day01 {
     }
 
     private static int doPart2(int[] list1, int[] list2) {
+        // map number of times elements in list2 appear
         var map2 = new HashMap<Integer, Integer>();
-
         for (var i = 0; i < list1.length; i++) {
             map2.put(list2[i], map2.getOrDefault(list2[i], 0) + 1);
         }
 
         var similarity = 0;
-        for (int el : list1) {
+        for (var el : list1) {
             similarity += el * map2.getOrDefault(el, 0);
         }
         return similarity;
