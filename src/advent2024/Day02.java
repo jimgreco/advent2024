@@ -20,7 +20,6 @@ import java.nio.file.Path;
 public class Day02 {
 
     public static void main(String[] args) throws IOException {
-        // parse file into two lists
         var lines = Files.readAllLines(Path.of("resources/day02"));
         var sequences = new int[lines.size()][];
         for (var i = 0; i < lines.size(); i++) {

@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * You're a string to parse that contains mul(X,Y), do(), and don't() instructions.
+ * You're given a string to parse that contains mul(X,Y), do(), and don't() instructions.
  *
  * <p>Part 1: Find the sum product of all the mul(X,Y) instructions.
  *
@@ -20,7 +20,6 @@ import java.nio.file.Path;
 public class Day03 {
 
     public static void main(String[] args) throws IOException {
-        // parse file into two lists
         var input = Files.readString(Path.of("resources/day03"));
 
         // Solution 1: 188741603
