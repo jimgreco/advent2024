@@ -81,10 +81,10 @@ public class Day04 {
             for (var col = 0; col < grid[row].length; col++) {
                 if (grid[row][col] == 'A') {
                     // retrieve the values diag from 'A'
-                    char upLeft = isValidCoords(grid, row - 1, col - 1) ? grid[row - 1][col - 1] : 0;
-                    char upRight = isValidCoords(grid, row - 1, col + 1) ? grid[row - 1][col + 1] : 0;
-                    char downLeft = isValidCoords(grid, row + 1, col - 1) ? grid[row + 1][col - 1] : 0;
-                    char downRight = isValidCoords(grid, row + 1, col + 1) ? grid[row + 1][col + 1] : 0;
+                    var upLeft = isValidCoords(grid, row - 1, col - 1) ? grid[row - 1][col - 1] : 0;
+                    var upRight = isValidCoords(grid, row - 1, col + 1) ? grid[row - 1][col + 1] : 0;
+                    var downLeft = isValidCoords(grid, row + 1, col - 1) ? grid[row + 1][col - 1] : 0;
+                    var downRight = isValidCoords(grid, row + 1, col + 1) ? grid[row + 1][col + 1] : 0;
                     if (upLeft + downRight == 'M' + 'S' && downLeft + upRight == 'M' + 'S') {
                         count++;
                     }
