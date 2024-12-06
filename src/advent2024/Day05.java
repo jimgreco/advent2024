@@ -55,8 +55,7 @@ public class Day05 {
         var pageDependencies = buildOrderRuleDependencies(orderingRules);
         var sum = 0;
         for (var pageList : pageLists) {
-            var valid = isValidOrder(pageDependencies, pageList);
-            if (valid) {
+            if (isValidOrder(pageDependencies, pageList)) {
                 sum += pageList.get(pageList.size() / 2); // the middle page
             }
         }
@@ -67,8 +66,7 @@ public class Day05 {
         var pageDependencies = buildOrderRuleDependencies(orderingRules);
         var sum = 0;
         for (var pageList : pageLists) {
-            var valid = isValidOrder(pageDependencies, pageList);
-            if (!valid) {
+            if (!isValidOrder(pageDependencies, pageList)) {
                 var sortedList = new ArrayList<>(pageList);
                 sortedList.sort((i1, i2) -> !pageDependencies.get(i1).contains(i2) ? -1 : 1);
                 sum += sortedList.get(sortedList.size() / 2); // the middle page
