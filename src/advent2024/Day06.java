@@ -18,7 +18,6 @@ import java.util.HashSet;
  * Iterate through each unique coordinate on the path and place an obstacle there.
  * For each iteration, record each coordinate and direction traversed.
  * If the coordinate and direction is repeated then the obstacle has caused a loop.
- *
  */
 public class Day06 {
 

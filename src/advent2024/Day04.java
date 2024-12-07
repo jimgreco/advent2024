@@ -14,6 +14,9 @@ import java.nio.file.Path;
  * <p>Part 2: Find two diag lines that spell "MAS", intersecting on the 'A'.
  * "MAS" can be spelled forward and backwards.
  * Solution: Linear search for each 'A' and then checking the two diag lines both contain an 'M' and 'S'.
+ *
+ * <p>Alternative: (From Aaron) You could do a convolution mask for Part 2.
+ * Java doesn't have matrix multiplication built-in.
  */
 public class Day04 {
 

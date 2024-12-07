@@ -25,6 +25,9 @@ import java.util.Set;
  *
  * <p>Part 2: Correct the invalid lists of numbers.
  * Solution: For each invalid list of numbers you can sort the invalid list using the order dependency rules.
+ *
+ * <p>Alternative: (From Aaron) You could find the part 2 middle number by finding the page with exactly length / 2 + 1
+ * dependencies instead of sorting the entire invalid page list.
  */
 public class Day05 {
 

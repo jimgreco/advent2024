@@ -15,7 +15,11 @@ import java.nio.file.Path;
  * An initial do() instruction is implied.
  *
  * <p>Solution: A text parser that reads the string character by character.
- * Inline hashes are used for "mul(", "do()", and "don't()" to prevent repetitive string comparisons.
+ * Inline hashes are used for "mul(", "do()", and "don't()" to prevent repetitive string comparisons and multiple
+ * passes over the same characters.
+ *
+ * <p>Alternative: You could do a Regex here because of the simplicity of the instructions, but this isn't very
+ * scalable as you get to more instructions or more complex instructions (e.g., nesting calls).
  */
 public class Day03 {
 
