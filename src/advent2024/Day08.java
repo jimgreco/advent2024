@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * You're given a grid with symbols ("antennas") at some of the coordinates.
+ * You're given a grid of "antennas" which are identified by a character.
+ * Groups of antennas can share the same antenna.
  *
- * <p>Part 1: Each pair of the same antenna generates two "antinodes".
+ * <p>Part 1: Each pair in the same antenna group generates two "antinodes".
  * For the first antenna in the pair, the antinode is the same distance (number of rows and columns) to the second
  * antenna in the pair, in the opposite direction.
  * And vice versa for the second antenna in the pair.
@@ -30,12 +31,12 @@ import java.util.Map;
  * Etc, and vice versa for the second antenna in the pair.
  * Solution: Do the same as in Part 1, but continue to travel the distance between antennas until the antinode
  * coordinates are outside the grid.
- * Additionally, add the two antennas as coordinates to set the set.
+ * Additionally, add the two antennas as coordinates to the set.
  */
 public class Day08 {
 
     public static void main(String[] args) throws IOException {
-        // read into a list of coordinates
+        // read into a grid
         var input = Files.readAllLines(Path.of("resources/day08"));
         var grid = new char[input.size()][];
         for (var i = 0; i < grid.length; i++) {
@@ -137,5 +138,5 @@ public class Day08 {
         return freqencies;
     }
 
-    record Coord(int row, int col) {}
+    private record Coord(int row, int col) {}
 }
