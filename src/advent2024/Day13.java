@@ -17,8 +17,7 @@ import java.nio.file.Path;
  *
  * <p>Part 2: Sum the product of the area and the number of sides for each shape.
  * Solution: Do the same classification as part 1.
- * Sides are calculated by keeping track of the current cell, last cell, the adjacent cell, and the last adjacent cell.
- * See the code for an example.
+ * Sides are calculated by doing corner detection. (Thanks Aaron!)
  */
 public class Day13 {
 
@@ -73,66 +72,33 @@ public class Day13 {
     }
 
     private static long doPart2(char[][] grid) {
-        var classifiedGrid = new int[grid.length][grid[0].length];
-        var length = classify(grid, classifiedGrid);
+        var cfGrid = new int[grid.length][grid[0].length];
+        var length = classify(grid, cfGrid);
         var areas = new int[length];
         var sides = new int[length];
+        var rows = cfGrid.length;
+        var cols = cfGrid[0].length;
 
-        // find sides in the up and down direction
-        // iterate over cols for each row
-        for (var i = 0; i < classifiedGrid.length; i++) {
-            var lastId = -1;
-            var lastUpId = -1;
-            var lastDownId = -1;
-            for (var j = 0; j < classifiedGrid[i].length; j++) {
-                var id = classifiedGrid[i][j];
-
-                // We have a new side if one of the following conditions is true:
-                // 1) left shape != current shape && current shape != up shape
-                //       1 1
-                //       1 2
-                // 2) current shape == diag shape && up shape != diag shape
-                //       1 2
-                //       1 1
-                var upId = i - 1 >= 0 ? classifiedGrid[i - 1][j] : 0;
-                if ((id != lastId && id != upId) || (id == lastUpId && upId != lastUpId)) {
-                    sides[id - 1]++;
-                }
-
-                var downId = i + 1 < classifiedGrid.length ? classifiedGrid[i + 1][j] : 0;
-                if ((id != lastId && id != downId) || (id == lastDownId && downId != lastDownId)) {
-                    sides[id - 1]++;
-                }
-
-                lastId = id;
-                lastUpId = upId;
-                lastDownId = downId;
-                // only count the area once
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                var id = cfGrid[i][j];
+                var up = i - 1 >= 0 ? cfGrid[i - 1][j] : 0;
+                var upRight = i - 1 >= 0 && j + 1 < cols ? cfGrid[i - 1][j + 1] : 0;
+                var right = j + 1 < rows ? cfGrid[i][j + 1] : 0;
+                var downRight = i + 1 < rows && j + 1 < cols ? cfGrid[i + 1][j + 1] : 0;
+                var down = i + 1 < rows ? cfGrid[i + 1][j] : 0;
+                var downLeft = i + 1 < rows && j - 1 >= 0 ? cfGrid[i + 1][j - 1] : 0;
+                var left = j - 1 >= 0 ? cfGrid[i][j - 1] : 0;
+                var upLeft = i - 1 >= 0 && j - 1 >= 0 ? cfGrid[i - 1][j - 1] : 0;
+                sides[id - 1] += ((id != up && id != left) ? 1 : 0)
+                        + ((id == up && id == left && id != upLeft) ? 1 : 0)
+                        + ((id != down && id != left) ? 1 : 0)
+                        + ((id == down && id == left && id != downLeft) ? 1 : 0)
+                        + ((id != up && id != right) ? 1 : 0)
+                        + ((id == up && id == right && id != upRight) ? 1 : 0)
+                        + ((id != down && id != right) ? 1 : 0)
+                        + ((id == down && id == right && id != downRight) ? 1 : 0);
                 areas[id - 1]++;
-            }
-        }
-
-        // find sides in the left and right direction
-        for (var j = 0; j < classifiedGrid[0].length; j++) {
-            var lastId = -1;
-            var lastLeftId = -1;
-            var lastRightId = -1;
-            for (var i = 0; i < classifiedGrid.length; i++) {
-                var id = classifiedGrid[i][j];
-
-                var leftId = j - 1 >= 0 ? classifiedGrid[i][j - 1] : 0;
-                if ((id != lastId && id != leftId) || (id == lastLeftId && leftId != lastLeftId)) {
-                    sides[id - 1]++;
-                }
-
-                var rightId = j + 1 < classifiedGrid.length ? classifiedGrid[i][j + 1] : 0;
-                if ((id != lastId && id != rightId) || (id == lastRightId && rightId != lastRightId)) {
-                    sides[id - 1]++;
-                }
-
-                lastId = id;
-                lastLeftId = leftId;
-                lastRightId = rightId;
             }
         }
         return sumProduct(sides, areas);
