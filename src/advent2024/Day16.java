@@ -50,44 +50,41 @@ public class Day16 {
         queue.add(new FullState(new State(find(grid, 'S'), 0, 1), 0, new HashSet<>()));
 
         while (!queue.isEmpty()) {
-            var size = queue.size();
-            for (var i = 0; i < size; i++) {
-                var fullState = queue.remove();
-                var state = fullState.state;
-                var cell = state.cell;
-                var score = fullState.score;
+            var fullState = queue.remove();
+            var state = fullState.state;
+            var cell = state.cell;
+            var score = fullState.score;
 
-                if (isValid(grid, cell) && (!visited.containsKey(state) || score <= visited.get(state))) {
-                    visited.put(state, score);
-                    var path = fullState.path;
-                    if (!path.contains(cell)) {
-                        path = new HashSet<>(path);
-                        path.add(cell);
+            if (isValid(grid, cell) && (!visited.containsKey(state) || score <= visited.get(state))) {
+                visited.put(state, score);
+                var path = fullState.path;
+                if (!path.contains(cell)) {
+                    path = new HashSet<>(path);
+                    path.add(cell);
+                }
+
+                if (grid[cell.row][cell.col] == 'E') {
+                    // made it to the end
+                    if (score < minScore) {
+                        minScore = score;
+                        minPath.clear();
+                        minPath.addAll(path);
+                    } else if (score == minScore) {
+                        minPath.addAll(path);
                     }
-
-                    if (grid[cell.row][cell.col] == 'E') {
-                        // made it to the end
-                        if (score < minScore) {
-                            minScore = score;
-                            minPath.clear();
-                            minPath.addAll(path);
-                        } else if (score == minScore) {
-                            minPath.addAll(path);
-                        }
+                } else {
+                    // move forward
+                    queue.add(new FullState(new State(
+                            new Cell(cell.row + state.deltaRow, cell.col + state.deltaCol),
+                            state.deltaRow, state.deltaCol), score + 1, path));
+                    if (state.deltaRow == 0) {
+                        // was going east or west, turn north and south
+                        queue.add(new FullState(new State(cell, -1, 0), score + 1000, path));
+                        queue.add(new FullState(new State(cell, 1, 0), score + 1000, path));
                     } else {
-                        // move forward
-                        queue.add(new FullState(new State(
-                                new Cell(cell.row + state.deltaRow, cell.col + state.deltaCol),
-                                state.deltaRow, state.deltaCol), score + 1, path));
-                        if (state.deltaRow == 0) {
-                            // was going east or west, turn north and south
-                            queue.add(new FullState(new State(cell, -1, 0), score + 1000, path));
-                            queue.add(new FullState(new State(cell, 1, 0), score + 1000, path));
-                        } else {
-                            // was going north or south, turn east and west
-                            queue.add(new FullState(new State(cell, 0, -1), score + 1000, path));
-                            queue.add(new FullState(new State(cell, 0, 1), score + 1000, path));
-                        }
+                        // was going north or south, turn east and west
+                        queue.add(new FullState(new State(cell, 0, -1), score + 1000, path));
+                        queue.add(new FullState(new State(cell, 0, 1), score + 1000, path));
                     }
                 }
             }
