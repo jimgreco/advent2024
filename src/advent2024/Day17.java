@@ -33,10 +33,10 @@ public class Day17 {
         // 2,4 regB = regA % 8
         // 1,3 regB = regB XOR 3
         // 7,5 regC = regA / 2^regB
-        // 1,5 regB = regB XOR 5
-        // 0,3 regA = regA / 8
-        // 4,2 regB = regB XOR regC
-        // 5,5 output regB % 8
+        // 1,5 regB = regB XOR 5            - regB =
+        // 0,3 regA = regA / 8              - regA drop last 3 bits
+        // 4,2 regB = regB XOR regC         - regB = (regB XOR regC) last three bits
+        // 5,5 output regB % 8              - RegB last 3 bits
         // 3,0 jump to start if regA != 0
 
         for (var i = 0; i < 100000; i++) {
