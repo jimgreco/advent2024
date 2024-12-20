@@ -55,7 +55,7 @@ public class Day15 {
         System.out.println("Solution 1: " + score);
 
         // Solution 2: 1500814 too high
-        //             1066498 too low
+        //             1066498 too low   1481392
         score = doPart2(grid, moves);
         System.out.println("Solution 2: " + score);
     }
